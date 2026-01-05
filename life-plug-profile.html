@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifestyle Plug - My Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0a0a0a;
+            --primary-gold: #d4af37;
+            --primary-white: #ffffff;
+            --text-light: #f5f5f5;
+            --accent-green: #10b981;
+            --accent-gray: #1a1a1a;
+            --accent-light-gray: #2d2d2d;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 3rem 5%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profile-header p {
+            color: #999;
+            font-size: 1rem;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: var(--accent-gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            color: var(--primary-gold);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-secondary {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Edit Form */
+        .edit-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .edit-section h2 {
+            color: var(--primary-white);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--accent-light-gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            background: rgba(212, 175, 55, 0.05);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .save-btn {
+            flex: 1;
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            flex: 1;
+            background: transparent;
+            color: var(--text-light);
+            padding: 1rem;
+            border: 2px solid var(--text-light);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: var(--text-light);
+            color: var(--primary-dark);
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--accent-light-gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: 2rem 5%;
+            }
+
+            .profile-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">LIFESTYLE PLUG</div>
+        <div class="nav-buttons">
+            <button class="back-btn" onclick="goBack()">← Back to Dashboard</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <p>View and manage your account information</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <h2 style="color: var(--primary-gold); margin-bottom: 2rem;">Account Information</h2>
+            
+            <div class="profile-info">
+                <div class="info-group">
+                    <div class="info-label">Full Name</div>
+                    <div class="info-value" id="profileName">Loading...</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Email Address</div>
+                    <div class="info-value" id="profileEmail">Loading...</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Phone Number</div>
+                    <div class="info-value" id="profilePhone">Not set</div>
+                </div>
+                <div class="info-group">
+                    <div class="info-label">Member Since</div>
+                    <div class="info-value" id="profileJoined">Loading...</div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <h2 style="color: var(--primary-gold); margin-top: 2rem; margin-bottom: 1.5rem;">Your Activity</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalBookings">0</div>
+                    <div class="stat-label">Total Bookings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="eventsAttended">0</div>
+                    <div class="stat-label">Events Attended</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₦0</div>
+                    <div class="stat-label">Total Spent</div>
+                </div>
+            </div>
+
+            <!-- Edit Section -->
+            <div class="edit-section">
+                <h2>Update Profile</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="editName">Full Name</label>
+                        <input type="text" id="editName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Phone Number</label>
+                        <input type="tel" id="editPhone" placeholder="+234 80X XXX XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBio">Bio</label>
+                        <textarea id="editBio" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="save-btn">Save Changes</button>
+                        <button type="button" class="cancel-btn" onclick="goBack()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDW8V2SjNITrA4LcdmeILh944mTbOKnM0c",
+            authDomain: "rewarderhub.firebaseapp.com",
+            projectId: "rewarderhub",
+            storageBucket: "rewarderhub.appspot.com",
+            messagingSenderId: "85965945106",
+            appId: "1:85965945106:web:fa0a57d8968926e1041bcb",
+            measurementId: "G-F2ERB5NGN0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        console.log('Profile Firebase initialized');
+
+        // Check Authentication and Load Profile
+        function loadProfile() {
+            auth.onAuthStateChanged(async (user) => {
+                console.log('Auth state changed:', user ? user.email : 'No user');
+                
+                if (user) {
+                    console.log('User authenticated:', user.email);
+                    
+                    // Display basic user info
+                    document.getElementById('profileName').textContent = user.displayName || 'Not set';
+                    document.getElementById('profileEmail').textContent = user.email;
+                    document.getElementById('editName').value = user.displayName || '';
+                    
+                    // Format creation date
+                    const createdDate = new Date(user.metadata.creationTime);
+                    document.getElementById('profileJoined').textContent = createdDate.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+
+                    // Load user data from Firestore
+                    try {
+                        const userDoc = await db.collection('users').doc(user.uid).get();
+                        if (userDoc.exists) {
+                            const data = userDoc.data();
+                            console.log('User data:', data);
+                            
+                            if (data.phone) {
+                                document.getElementById('profilePhone').textContent = data.phone;
+                                document.getElementById('editPhone').value = data.phone;
+                            }
+                            if (data.bio) {
+                                document.getElementById('editBio').value = data.bio;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error loading user data:', error);
+                    }
+                } else {
+                    console.log('No user authenticated, redirecting to login');
+                    setTimeout(() => {
+                        window.location.href = 'lifestyle_plug_landing.html';
+                    }, 1000);
+                }
+            });
+        }
+
+        // Go Back to Dashboard
+        function goBack() {
+            window.location.href = 'lifestyle-plug-dashboard.html';
+        }
+
+        // Save Profile Changes
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const user = auth.currentUser;
+            if (!user) {
+                alert('User not authenticated');
+                return;
+            }
+
+            const name = document.getElementById('editName').value.trim();
+            const phone = document.getElementById('editPhone').value.trim();
+            const bio = document.getElementById('editBio').value.trim();
+
+            try {
+                // Update display name
+                if (name) {
+                    await user.updateProfile({
+                        displayName: name
+                    });
+                }
+
+                // Update Firestore
+                await db.collection('users').doc(user.uid).update({
+                    displayName: name,
+                    phone: phone,
+                    bio: bio,
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                alert('Profile updated successfully!');
+                loadProfile(); // Reload profile
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile: ' + error.message);
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Profile page loaded, checking authentication...');
+            loadProfile();
+        });
+    </script>
+</body>
+</html>
