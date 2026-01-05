@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifestyle Plug - Premium Events & Ticketing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark Mode (Default) */
+            --primary-dark: #0a0a0a;
+            --primary-gold: #d4af37;
+            --primary-white: #ffffff;
+            --text-light: #f5f5f5;
+            --text-dark: #333333;
+            --accent-gray: #1a1a1a;
+            --accent-light-gray: #2d2d2d;
+            --accent-green: #10b981;
+            --bg-color: var(--primary-dark);
+            --card-bg: var(--accent-gray);
+            --text-color: var(--text-light);
+            --border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        body.light-mode {
+            /* Light Mode */
+            --primary-dark: #ffffff;
+            --primary-gold: #d4af37;
+            --primary-white: #0a0a0a;
+            --text-light: #0a0a0a;
+            --text-dark: #f5f5f5;
+            --accent-gray: #f0f0f0;
+            --accent-light-gray: #e5e5e5;
+            --accent-green: #10b981;
+            --bg-color: var(--primary-dark);
+            --card-bg: #fafafa;
+            --text-color: var(--text-light);
+            --border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode nav {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-gold);
+            color: var(--primary-white);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--primary-gold);
+            border: 2px solid var(--primary-gold);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-gold);
+            color: var(--primary-white);
+        }
+
+        .btn-get-started {
+            background: var(--primary-gold);
+            color: var(--primary-white);
+            border: 2px solid var(--primary-gold);
+            padding: 0.6rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .btn-get-started:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            nav {
+                padding: 1rem 5%;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            min-height: 550px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 3rem 5%;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&h=600&fit=crop') center/cover no-repeat,
+                        url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=1200&h=600&fit=crop') center/cover no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.6) 0%, rgba(16, 185, 129, 0.15) 100%),
+                        linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(10, 10, 10, 0.7) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--primary-gold);
+            color: var(--primary-gold);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--primary-white);
+            text-shadow: 2px 2px 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(16, 185, 129, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .powered-by {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            color: #d0d0d0;
+        }
+
+        .rewarder-logo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--primary-white);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Auth Modal Styles */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .auth-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .auth-modal-content {
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95) 0%, rgba(30, 30, 30, 0.95) 100%),
+                        url('https://images.unsplash.com/photo-1610271340738-f049cd451733?w=500&h=600&fit=crop') center/cover no-repeat;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 420px;
+            width: 90%;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+            pointer-events: none;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--primary-gold);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: var(--accent-green);
+        }
+
+        .auth-form-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .auth-form-container h2 {
+            color: var(--primary-white);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .auth-form-container > p {
+            color: #999;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            background: rgba(212, 175, 55, 0.05);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary-gold);
+        }
+
+        .form-checkbox label {
+            color: #999;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            color: var(--primary-white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .auth-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            color: var(--accent-green);
+        }
+
+        @media (max-width: 480px) {
+            .auth-modal-content {
+                padding: 2rem;
+                max-width: 95%;
+            }
+
+            .auth-modal-content h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .btn-primary {
+            background: var(--primary-gold);
+            color: var(--primary-white);
+            padding: 0.9rem 2.2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-color);
+            padding: 0.9rem 2.2rem;
+            border: 2px solid var(--text-color);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-color);
+            color: var(--primary-white);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 5%;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            color: #999;
+            font-size: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .feature-card p {
+            color: #999;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        /* Events Section */
+        .events {
+            padding: 4rem 5%;
+            background: var(--bg-color);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            height: 200px;
+        }
+
+        .event-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-image {
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 55%;
+        }
+
+        .event-top {
+            flex: 1;
+        }
+
+        .event-date {
+            color: var(--primary-gold);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .event-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-color);
+        }
+
+        .event-location {
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .get-ticket {
+            background: var(--primary-gold);
+            color: var(--primary-white);
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .get-ticket:hover {
+            background: var(--accent-green);
+            transform: scale(1.05);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 3rem 5%;
+            background: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+
+        .stat-item p {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 5%;
+            background: var(--bg-color);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stars {
+            color: var(--primary-gold);
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .testimonial-text {
+            color: #999;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .testimonial-role {
+            color: var(--primary-gold);
+            font-size: 0.85rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 3.5rem;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            text-align: center;
+            border-radius: 15px;
+            margin: 3rem 5%;
+            color: var(--primary-white);
+        }
+
+        .cta h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cta button {
+            background: var(--primary-white);
+            color: var(--primary-gold);
+            padding: 0.8rem 2.5rem;
+            border: 2px solid var(--primary-white);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta button:hover {
+            background: transparent;
+            color: var(--primary-white);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-color);
+            padding: 2.5rem 5%;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .footer-section h4 {
+            color: var(--primary-gold);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .footer-section a,
+        .footer-section p {
+            color: #999;
+            text-decoration: none;
+            margin-bottom: 0.4rem;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.8rem;
+            justify-content: center;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: var(--accent-light-gray);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--primary-gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-gold);
+            color: var(--primary-white);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .hero-buttons {
+                gap: 0.8rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 0.6rem 1.4rem;
+                font-size: 0.85rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .event-card {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .event-image {
+                width: 100%;
+                height: 150px;
+            }
+
+            .event-content {
+                width: 100%;
+            }
+
+            .cta {
+                margin: 2rem;
+                padding: 2rem 1.5rem;
+            }
+
+            .cta h2 {
+                font-size: 1.6rem;
+            }
+
+            .features-grid,
+            .events-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">LIFESTYLE PLUG</div>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="#events">Events</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+        <div class="nav-buttons">
+            <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">🌙</button>
+            <button class="btn-login" onclick="openModal('loginModal')">Login</button>
+            <button class="btn-get-started" onclick="openModal('signupModal')">Get Started</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">✨ Nigeria's Premium Event Platform</div>
+            <h1>Discover Nigeria's Hottest Events</h1>
+            <p>Book premium tickets to concerts, shows, festivals and more. Experience the best of Nigerian culture and entertainment.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary">Browse Events</button>
+                <button class="btn-secondary">Learn More</button>
+            </div>
+            <div class="powered-by">
+                <span>Powered by</span>
+                <div class="rewarder-logo">R</div>
+                <span>Rewarder</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Why Choose Lifestyle Plug</h2>
+            <p>The ultimate platform for premium event experiences</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎫</div>
+                <h3>Easy Ticketing</h3>
+                <p>Secure and instant ticket booking with multiple payment options for your convenience.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Safe & Secure</h3>
+                <p>Industry-leading security measures to protect your personal and payment information.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h3>VIP Access</h3>
+                <p>Exclusive member benefits and early access to premium events and special experiences.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Events Showcase -->
+    <section class="events" id="events">
+        <div class="section-title">
+            <h2>Featured Events</h2>
+            <p>Check out our curated selection of premium events</p>
+        </div>
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1504523711802-a7f0c4c0f4a6?w=400&h=300&fit=crop" alt="Concert">
+                </div>
+                <div class="event-content">
+                    <div class="event-top">
+                        <div class="event-date">Jan 25, 2026</div>
+                        <h3>Wizkid Live in Lagos</h3>
+                        <p class="event-location">🎤 Eko Convention Center, Lagos</p>
+                    </div>
+                    <div class="event-bottom">
+                        <span class="price">₦45,000</span>
+                        <button class="get-ticket">Get Ticket</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1578502494516-52df343f2742?w=400&h=300&fit=crop" alt="Art Exhibition">
+                </div>
+                <div class="event-content">
+                    <div class="event-top">
+                        <div class="event-date">Feb 8, 2026</div>
+                        <h3>Lagos Art Week Gala</h3>
+                        <p class="event-location">🖼️ Nike Art Gallery, Lagos</p>
+                    </div>
+                    <div class="event-bottom">
+                        <span class="price">₦35,000</span>
+                        <button class="get-ticket">Get Ticket</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1517604931442-7e0c6ed7ded7?w=400&h=300&fit=crop" alt="Film Festival">
+                </div>
+                <div class="event-content">
+                    <div class="event-top">
+                        <div class="event-date">Feb 22, 2026</div>
+                        <h3>AFRIFF Film Festival</h3>
+                        <p class="event-location">🎞️ Lekki, Lagos</p>
+                    </div>
+                    <div class="event-bottom">
+                        <span class="price">₦28,000</span>
+                        <button class="get-ticket">Get Ticket</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1501688725688-c01caa14cf1e?w=400&h=300&fit=crop" alt="Music Festival">
+                </div>
+                <div class="event-content">
+                    <div class="event-top">
+                        <div class="event-date">Mar 15, 2026</div>
+                        <h3>Afrobeats Carnival 2026</h3>
+                        <p class="event-location">🎵 Landmark Event Centre, Lagos</p>
+                    </div>
+                    <div class="event-bottom">
+                        <span class="price">₦55,000</span>
+                        <button class="get-ticket">Get Ticket</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1518684933598-68aba67f4a4c?w=400&h=300&fit=crop" alt="Championship">
+                </div>
+                <div class="event-content">
+                    <div class="event-top">
+                        <div class="event-date">Mar 28, 2026</div>
+                        <h3>NPFL Championship Match</h3>
+                        <p class="event-location">🏟️ Abuja National Stadium</p>
+                    </div>
+                    <div class="event-bottom">
+                        <span class="price">₦15,000</span>
+                        <button class="get-ticket">Get Ticket</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop" alt="Design Conference">
+                </div>
+                <div class="event-content">
+                    <div class="event-top">
+                        <div class="event-date">Apr 10, 2026</div>
+                        <h3>West Africa Tech Summit</h3>
+                        <p class="event-location">🏢 Abuja Convention Centre</p>
+                    </div>
+                    <div class="event-bottom">
+                        <span class="price">₦75,000</span>
+                        <button class="get-ticket">Get Ticket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>What Our Users Say</h2>
+            <p>Real experiences from our amazing community</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Lifestyle Plug made it so easy to book my tickets for Wizkid's concert. The platform is smooth and the customer service is exceptional!"</p>
+                <div class="testimonial-author">Chioma Okafor</div>
+                <div class="testimonial-role">Music Lover, Lagos</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"I discovered the AFRIFF festival through Lifestyle Plug. Amazing events, reliable booking system, and I got my tickets in minutes!"</p>
+                <div class="testimonial-author">Tunde Adeyemi</div>
+                <div class="testimonial-role">Film Enthusiast, Abuja</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Worth every naira! The VIP access to the Afrobeats Carnival was unreal. Lifestyle Plug really knows how to deliver premium experiences."</p>
+                <div class="testimonial-author">Aisha Abubakar</div>
+                <div class="testimonial-role">Premium Member, Port Harcourt</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Ready to Experience Premium Events?</h2>
+        <p>Join thousands of event enthusiasts and book your next unforgettable experience today.</p>
+        <button>Start Your Journey</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Lifestyle Plug</h4>
+                <p>Your premier destination for premium events and unforgettable experiences worldwide.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#">Browse Events</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact Support</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h4>Policies</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Refund Policy</a>
+                <a href="#">Security</a>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">𝕏</a>
+                    <a href="#">📷</a>
+                    <a href="#">▶️</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Lifestyle Plug. All rights reserved. | Crafted with elegance</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth Modals -->
+    <div id="loginModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+            <div class="auth-form-container">
+                <h2>Welcome Back</h2>
+                <p>Sign in to your Lifestyle Plug account</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Remember me</label>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In</button>
+                </form>
+                <p class="auth-footer">Don't have an account? <a href="#" onclick="switchModal('loginModal', 'signupModal')">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="signupModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <button class="close-modal" onclick="closeModal('signupModal')">&times;</button>
+            <div class="auth-form-container">
+                <h2>Join Lifestyle Plug</h2>
+                <p>Create your account and start booking events</p>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone Number</label>
+                        <input type="tel" id="signup-phone" placeholder="+234 80X XXX XXXX" required>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="agree-terms" required>
+                        <label for="agree-terms">I agree to the Terms and Conditions</label>
+                    </div>
+                    <button type="submit" class="auth-btn">Create Account</button>
+                </form>
+                <p class="auth-footer">Already have an account? <a href="#" onclick="switchModal('signupModal', 'loginModal')">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDW8V2SjNITrA4LcdmeILh944mTbOKnM0c",
+            authDomain: "rewarderhub.firebaseapp.com",
+            projectId: "rewarderhub",
+            storageBucket: "rewarderhub.appspot.com",
+            messagingSenderId: "85965945106",
+            appId: "1:85965945106:web:fa0a57d8968926e1041bcb",
+            measurementId: "G-F2ERB5NGN0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        console.log('Firebase initialized successfully');
+
+        // Auth Modal Functions
+        function openModal(modalId) {
+            console.log('Opening modal:', modalId);
+            const modal = document.getElementById(modalId);
+            console.log('Modal element found:', modal ? 'Yes' : 'No');
+            if (modal) {
+                modal.classList.add('active');
+                console.log('Active class added, modal classes:', modal.className);
+                document.body.style.overflow = 'hidden';
+            } else {
+                console.error('Modal not found:', modalId);
+            }
+        }
+
+        function closeModal(modalId) {
+            console.log('Closing modal:', modalId);
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function switchModal(closeId, openId) {
+            closeModal(closeId);
+            setTimeout(() => openModal(openId), 300);
+        }
+
+        // Login Function
+        async function handleLogin(email, password) {
+            try {
+                console.log('Attempting Firebase sign in...');
+                const result = await auth.signInWithEmailAndPassword(email, password);
+                console.log('Login successful:', result.user.email);
+                alert('Successfully signed in!');
+                closeModal('loginModal');
+                document.getElementById('loginForm').reset();
+                setTimeout(() => {
+                    window.location.href = 'lifestyle-plug-dashboard.html';
+                }, 500);
+            } catch (error) {
+                console.error('Login error:', error.code, error.message);
+                const errorMsg = error.code === 'auth/user-not-found' ? 'User not found' :
+                    error.code === 'auth/wrong-password' ? 'Incorrect password' :
+                        error.code === 'auth/invalid-email' ? 'Invalid email' :
+                            error.code === 'auth/invalid-credential' ? 'Invalid email or password' :
+                                error.message;
+                alert('Login failed: ' + errorMsg);
+            }
+        }
+
+        // Sign Up Function
+        async function handleSignUp(name, email, password, phone) {
+            try {
+                console.log('Attempting Firebase registration...');
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                console.log('User created:', user.uid);
+
+                // Store user data in Firestore
+                await db.collection('users').doc(user.uid).set({
+                    displayName: name,
+                    email: email,
+                    phone: phone,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    role: 'user'
+                });
+
+                console.log('Registration successful:', email);
+                alert('Account created successfully!');
+                closeModal('signupModal');
+                document.getElementById('signupForm').reset();
+                setTimeout(() => {
+                    window.location.href = 'lifestyle-plug-dashboard.html';
+                }, 500);
+            } catch (error) {
+                console.error('Registration error:', error.code, error.message);
+                const errorMsg = error.code === 'auth/email-already-in-use' ? 'Email already in use' :
+                    error.code === 'auth/invalid-email' ? 'Invalid email' :
+                        error.code === 'auth/weak-password' ? 'Password too weak (minimum 6 characters)' :
+                            error.message;
+                alert('Sign up failed: ' + errorMsg);
+            }
+        }
+
+        // Monitor auth state
+        auth.onAuthStateChanged(user => {
+            console.log('Auth state changed:', user ? user.email : 'No user');
+        });
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.auth-modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
+
+        // Login and Get Started buttons - Setup after DOM loads
+        function setupButtonListeners() {
+            const loginBtn = document.querySelector('.btn-login');
+            const startBtn = document.querySelector('.btn-get-started');
+            
+            console.log('Login button:', loginBtn ? 'Found' : 'Not found');
+            console.log('Get Started button:', startBtn ? 'Found' : 'Not found');
+            
+            if (loginBtn) {
+                loginBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Login button clicked');
+                    openModal('loginModal');
+                });
+            }
+            
+            if (startBtn) {
+                startBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('Get Started button clicked');
+                    openModal('signupModal');
+                });
+            }
+        }
+        
+        // Call after DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupButtonListeners);
+        } else {
+            setupButtonListeners();
+        }
+
+        // Setup form handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            // Login form
+            const loginForm = document.getElementById('loginForm');
+            console.log('Setting up login form:', loginForm ? 'Found' : 'Not found');
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    console.log('Login form submitted');
+
+                    const emailInput = document.getElementById('login-email');
+                    const passwordInput = document.getElementById('login-password');
+
+                    const email = emailInput ? emailInput.value.trim() : '';
+                    const password = passwordInput ? passwordInput.value : '';
+
+                    console.log('Email:', email, 'Password:', password ? '***' : 'empty');
+
+                    if (!email || !password) {
+                        alert('Please fill in all fields');
+                        return;
+                    }
+
+                    await handleLogin(email, password);
+                });
+            } else {
+                console.warn('Login form element not found');
+            }
+
+            // Sign Up form
+            const signupForm = document.getElementById('signupForm');
+            console.log('Setting up signup form:', signupForm ? 'Found' : 'Not found');
+
+            if (signupForm) {
+                signupForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    console.log('Signup form submitted');
+
+                    const nameInput = document.getElementById('signup-name');
+                    const emailInput = document.getElementById('signup-email');
+                    const passwordInput = document.getElementById('signup-password');
+                    const phoneInput = document.getElementById('signup-phone');
+
+                    const name = nameInput ? nameInput.value.trim() : '';
+                    const email = emailInput ? emailInput.value.trim() : '';
+                    const password = passwordInput ? passwordInput.value : '';
+                    const phone = phoneInput ? phoneInput.value.trim() : '';
+
+                    console.log('Name:', name, 'Email:', email, 'Password:', password ? '***' : 'empty', 'Phone:', phone);
+
+                    if (!name || !email || !password || !phone) {
+                        alert('Please fill in all fields');
+                        return;
+                    }
+
+                    if (password.length < 6) {
+                        alert('Password must be at least 6 characters');
+                        return;
+                    }
+
+                    await handleSignUp(name, email, password, phone);
+                });
+            } else {
+                console.warn('Signup form element not found');
+            }
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const bodyElement = document.body;
+
+        // Check for saved theme preference or default to dark mode
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'light') {
+            bodyElement.classList.add('light-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', function() {
+            if (bodyElement.classList.contains('light-mode')) {
+                bodyElement.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '🌙';
+            } else {
+                bodyElement.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
