@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifestyle Plug - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0a0a0a;
+            --primary-gold: #d4af37;
+            --primary-white: #ffffff;
+            --text-light: #f5f5f5;
+            --accent-green: #10b981;
+            --accent-gray: #1a1a1a;
+            --accent-light-gray: #2d2d2d;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            color: var(--primary-gold);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .user-email {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .logout-btn {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 250px;
+            background: var(--accent-gray);
+            border-left: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 999;
+            padding: 1.5rem 0;
+            animation: slideIn 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .mobile-menu-item {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mobile-menu-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-gold);
+            padding-left: 2rem;
+        }
+
+        .mobile-menu-item.danger {
+            color: #ff6b6b;
+        }
+
+        .mobile-menu-item.danger:hover {
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 3rem 5%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--primary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-header p {
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        /* Welcome Card */
+        .welcome-card {
+            background: linear-gradient(135deg, var(--accent-gray) 0%, var(--accent-light-gray) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .welcome-card h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-white);
+        }
+
+        .welcome-card p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Events Grid */
+        .events-section {
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--primary-white);
+            border-bottom: 2px solid var(--primary-gold);
+            padding-bottom: 1rem;
+        }
+
+        /* Horizontal Scrollable Events */
+        .events-scroll-container {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        .events-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .events-scroll-container::-webkit-scrollbar-track {
+            background: var(--accent-gray);
+            border-radius: 10px;
+        }
+
+        .events-scroll-container::-webkit-scrollbar-thumb {
+            background: var(--primary-gold);
+            border-radius: 10px;
+        }
+
+        .events-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-green);
+        }
+
+        .event-card-scroll {
+            flex: 0 0 280px;
+            background: var(--accent-gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .event-card-scroll:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .event-card {
+            background: var(--accent-gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .event-card h3 {
+            color: var(--primary-gold);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .event-card p {
+            color: #b0b0b0;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .price {
+            color: var(--accent-green);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .book-btn {
+            display: inline-block;
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .book-btn:hover {
+            background: var(--accent-green);
+            transform: scale(1.05);
+        }
+
+        /* User Stats */
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: var(--accent-gray);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Loading & Error States */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary-gold);
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            main {
+                padding: 2rem 5%;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-user {
+                gap: 1rem;
+            }
+
+            .user-info {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">LIFESTYLE PLUG</div>
+        <div class="nav-user">
+            <div class="user-info">
+                <div class="user-name" id="userNameNav">Loading...</div>
+                <div class="user-email" id="userEmailNav"></div>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()" id="desktopLogout">Logout</button>
+            <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a class="mobile-menu-item" onclick="goToProfile()">👤 My Profile</a>
+        <a class="mobile-menu-item" onclick="openCreateEventModal()">➕ Create Event</a>
+        <a class="mobile-menu-item danger" onclick="handleLogout()">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="dashboard-header">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>Manage your events and bookings</p>
+        </div>
+
+        <!-- Quick Browse - Horizontal Scrollable Events -->
+        <section class="events-section">
+            <h2 class="section-title">Quick Browse</h2>
+            <div class="events-scroll-container" id="quickBrowseContainer">
+                <div class="loading">Loading events...</div>
+            </div>
+        </section>
+
+
+
+        <!-- Featured Events -->
+        <section class="events-section">
+            <h2 class="section-title">Featured Events</h2>
+            <div class="events-grid" id="eventsContainer">
+                <div class="loading">Loading events...</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDW8V2SjNITrA4LcdmeILh944mTbOKnM0c",
+            authDomain: "rewarderhub.firebaseapp.com",
+            projectId: "rewarderhub",
+            storageBucket: "rewarderhub.appspot.com",
+            messagingSenderId: "85965945106",
+            appId: "1:85965945106:web:fa0a57d8968926e1041bcb",
+            measurementId: "G-F2ERB5NGN0"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        console.log('Dashboard Firebase initialized');
+
+        // Sample Events Data
+        const sampleEvents = [
+            {
+                id: 1,
+                title: "Wizkid Live in Lagos",
+                date: "Jan 25, 2026",
+                location: "Eko Convention Center",
+                price: "₦45,000"
+            },
+            {
+                id: 2,
+                title: "Lagos Art Week Gala",
+                date: "Feb 8, 2026",
+                location: "Nike Art Gallery",
+                price: "₦35,000"
+            },
+            {
+                id: 3,
+                title: "AFRIFF Film Festival",
+                date: "Feb 22, 2026",
+                location: "Lekki, Lagos",
+                price: "₦28,000"
+            },
+            {
+                id: 4,
+                title: "Afrobeats Carnival 2026",
+                date: "Mar 15, 2026",
+                location: "Landmark Event Centre",
+                price: "₦55,000"
+            },
+            {
+                id: 5,
+                title: "NPFL Championship Match",
+                date: "Mar 28, 2026",
+                location: "Abuja National Stadium",
+                price: "₦15,000"
+            },
+            {
+                id: 6,
+                title: "West Africa Tech Summit",
+                date: "Apr 10, 2026",
+                location: "Abuja Convention Centre",
+                price: "₦75,000"
+            }
+        ];
+
+        // Check Authentication
+        function checkAuth() {
+            auth.onAuthStateChanged(async (user) => {
+                console.log('Auth state changed:', user ? user.email : 'No user');
+                
+                if (user) {
+                    console.log('User authenticated:', user.email);
+                    // Update UI with user info
+                    document.getElementById('userNameNav').textContent = user.displayName || 'User';
+                    document.getElementById('userEmailNav').textContent = user.email;
+
+                    // Load user data from Firestore
+                    try {
+                        const userDoc = await db.collection('users').doc(user.uid).get();
+                        if (userDoc.exists) {
+                            console.log('User data:', userDoc.data());
+                        }
+                    } catch (error) {
+                        console.error('Error loading user data:', error);
+                    }
+
+                    // Load events
+                    loadEvents();
+                } else {
+                    console.log('No user authenticated, redirecting to login');
+                    // Redirect to login page
+                    setTimeout(() => {
+                        window.location.href = 'lifestyle_plug_landing.html';
+                    }, 1000);
+                }
+            });
+        }
+
+        // Load Events
+        function loadEvents() {
+            // Load horizontal scrollable events
+            const quickBrowseContainer = document.getElementById('quickBrowseContainer');
+            quickBrowseContainer.innerHTML = '';
+
+            sampleEvents.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card-scroll';
+                eventCard.innerHTML = `
+                    <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem; font-size: 1rem;">${event.title}</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 0.3rem; font-size: 0.85rem;"><strong>📅</strong> ${event.date}</p>
+                    <p style="color: #b0b0b0; margin-bottom: 0.5rem; font-size: 0.85rem;"><strong>📍</strong> ${event.location}</p>
+                    <div style="color: var(--accent-green); font-weight: 700; font-size: 1rem; margin-top: 1rem;">${event.price}</div>
+                    <button class="book-btn" onclick="bookEvent('${event.title}', '${event.price}')" style="font-size: 0.8rem; padding: 0.5rem 1rem; margin-top: 0.8rem;">Book</button>
+                `;
+                quickBrowseContainer.appendChild(eventCard);
+            });
+
+            // Load grid events
+            const eventsContainer = document.getElementById('eventsContainer');
+            eventsContainer.innerHTML = '';
+
+            sampleEvents.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                eventCard.innerHTML = `
+                    <h3>${event.title}</h3>
+                    <p><strong>📅 Date:</strong> ${event.date}</p>
+                    <p><strong>📍 Location:</strong> ${event.location}</p>
+                    <div class="price">${event.price}</div>
+                    <button class="book-btn" onclick="bookEvent('${event.title}', '${event.price}')">Book Now</button>
+                `;
+                eventsContainer.appendChild(eventCard);
+            });
+        }
+
+        // Book Event
+        function bookEvent(eventTitle, price) {
+            alert(`Booking for: ${eventTitle}\nPrice: ${price}\n\nThis feature will be available soon!`);
+        }
+
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Show hamburger on mobile
+        function checkMobileView() {
+            const hamburger = document.getElementById('hamburgerBtn');
+            const desktopLogout = document.getElementById('desktopLogout');
+            const userInfo = document.querySelector('.user-info');
+            
+            if (window.innerWidth <= 768) {
+                hamburger.style.display = 'flex';
+                desktopLogout.style.display = 'none';
+                userInfo.style.display = 'none';
+            } else {
+                hamburger.style.display = 'none';
+                desktopLogout.style.display = 'block';
+                userInfo.style.display = 'block';
+            }
+        }
+
+        window.addEventListener('resize', checkMobileView);
+
+        // Go to Profile
+        function goToProfile() {
+            toggleMobileMenu();
+            window.location.href = 'lifestyle-plug-profile.html';
+        }
+
+        // Open Create Event Modal
+        function openCreateEventModal() {
+            toggleMobileMenu();
+            alert('Create Event feature coming soon!');
+            // Later we'll add a modal here
+        }
+
+        // Logout
+        async function handleLogout() {
+            try {
+                await auth.signOut();
+                console.log('User logged out');
+                setTimeout(() => {
+                    window.location.href = 'lifestyle_plug_landing.html';
+                }, 500);
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Error logging out: ' + error.message);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Dashboard loaded, checking authentication...');
+            checkMobileView();
+            checkAuth();
+        });
+    </script>
+</body>
+</html>
